@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>name.atsushieno.xamarin.android.buildenhancer</id>
+    <version>1.0.0</version>
+    <authors>atsushieno</authors>
+    <owners>atsushieno</owners>
+    <licenseUrl>http://https://github.com/atsushieno/xamarin-android-build-enhancer/LICENSE</licenseUrl>
+    <projectUrl>http://https://github.com/atsushieno/xamarin-android-build-ehancer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Xamarin.Android Build enhancer / booster</description>
+    <releaseNotes>See github commit logs.</releaseNotes>
+    <copyright>Copyright (C) 2018 Atsushi Eno</copyright>
+    <tags></tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="_._" target="lib/monoandroid10/" />
+    <file src="build/name.atsushieno.xamarin.android.buildenhancer.targets" target="build" />
+  </files>
+</package>
