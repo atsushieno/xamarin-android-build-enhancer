@@ -1,5 +1,41 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+  <!-- Compile Java sources within Java Binding project -->
+  <Target Name="_DefineDynamicProperties">
+    <PropertyGroup>
+     <_IntermediateBJCPath>$(IntermediateOutputPath)binding-java-classes\</_IntermediateBJCPath>
+      <BindingJavaSourceDirectory Condition="'$(BindingJavaSourceDirectory)' == ''">java</BindingJavaSourceDirectory>    <_BindingIntermediateJarBaseName>$(_IntermediateBJCPath)$(MSBuildProjectName)</_BindingIntermediateJarBaseName>
+    </PropertyGroup>
+  </Target>
+  
+  <Target Name="BuildJarFromSources" BeforeTargets="ExportJarToXml" DependsOnTargets="_DefineDynamicProperties">
+    <MakeDir Directories="$(_IntermediateBJCPath)" />
+    <MakeDir Directories="$(_IntermediateBJCPath)bin" />
+    <Delete
+      Condition="Exists('$(_BindingIntermediateJarBaseName).lst')"
+      Files="$(_BindingIntermediateJarBaseName).lst" />
+    <WriteLinesToFile File="$(_BindingIntermediateJarBaseName).lst" Lines="@(BindingJavaSource)" />
+    <Exec Command="javac -g -d $(_IntermediateBJCPath)bin @$(_BindingIntermediateJarBaseName).lst" />
+    <Exec Command="jar cvf $(_BindingIntermediateJarBaseName).jar $(_IntermediateBJCPath)bin" />
+    <CreateItem Include="$(_BindingIntermediateJarBaseName).jar">
+      <Output TaskParameter="Include" ItemName="EmbeddedJar" />
+    </CreateItem>
+  </Target>
+  
+  <!-- disabled so far -->
+  <Target Name="BuildSourceJarFromSources"
+      Condition="False And Exists('$(BindingJavaSourceDirectory)')" 
+      BeforeTargets="_GenerateJavaDocFromSourceJars">
+		<Exec Command="jar cvf $(_BindingIntermediateJarBaseName)-sources.jar @(BindingJavaSource)" />
+    <CreateItem Include="$(_BindingIntermediateJarBaseName)-sources.jar">
+      <Output TaskParameter="Include" ItemName="JavaSourceJar" />
+    </CreateItem>
+  </Target>
+
+  <Target Name="CleanJarFromSources" BeforeTargets="Clean" DependsOnTargets="_DefineDynamicProperties">
+    <RemoveDir Directories="$(_IntermediateBJCPath)" />
+  </Target>
+
   <!-- Properties that should have been enabled by default in any sense. -->
   <PropertyGroup>
     <!--
