@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>name.atsushieno.xamarin.android.buildenhancer</id>
-    <version>1.0.0</version>
+    <version>1.1.5</version>
     <authors>atsushieno</authors>
     <owners>atsushieno</owners>
     <licenseUrl>http://https://github.com/atsushieno/xamarin-android-build-enhancer/LICENSE</licenseUrl>
@@ -17,6 +17,7 @@
   </metadata>
   <files>
     <file src="_._" target="lib/monoandroid10/" />
+    <file src="build/name.atsushieno.xamarin.android.buildenhancer.props" target="build" />
     <file src="build/name.atsushieno.xamarin.android.buildenhancer.targets" target="build" />
   </files>
 </package>

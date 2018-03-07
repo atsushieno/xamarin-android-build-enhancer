@@ -35,48 +35,17 @@
   <Target Name="CleanJarFromSources" BeforeTargets="Clean" DependsOnTargets="_DefineDynamicProperties">
     <RemoveDir Directories="$(_IntermediateBJCPath)" />
   </Target>
-
-  <!-- Properties that should have been enabled by default in any sense. -->
+  
+  <!--
+  This is required because Xamarin.Android.Debugging.targets is dumb and always overwrite _InstantRunEnabled property no matter how you enable it in *.props.
+  This property was newly added after all the changes I made to implement
+  the improved fast deployment and destroy all my effort, this bringing back
+  horrible development experiment to you,.
+  
+  I'm reverting it all back.
+  -->
   <PropertyGroup>
-    <!--
-	This is specified to indicate that we use "class-parse" tool
-	instead of unmaintained "jar2xml". The default in xamarin-android is
-	"jar2xml" for fear of compatibility breakage. But that concern is almost
-	only in theory. Xamarin.Android should make both as identical.
-    -->
-    <AndroidClassParser>class-parse</AndroidClassParser>
-
-    <!--
-	This is specified to indicate that we use "improved" fast deployment
-	which works like "Instant Run" in Android Studio. That is, we also
-	avoid APK updates as long as possible and therefore greatly improve
-	deployment speed.
-
-	This should have been enabled in 2016 and never happened due to
-	lack of interest in improving things at Xamarin.Android team.
-
-	Note that this does not take any effect on OSS version of
-	xamarin-android as there is no debugging support in it.
-    -->
-    <AndroidFastDeploymentType Condition="'$(AndroidFastDeploymentType)' == ''">assemblies:dexes</AndroidFastDeploymentType>
-
-    <!--
-	This simplifies package names in the intermediate Java code that
-	xamarin-android generates.
-	Before this change, you get something like `md5[some_hash].Your.Class.Name`.
-	After this change, you get whatever you used in your .NET namespace,
-	in lowercase.
-
-	I find md5 hashing shitty and should have been removed, but it was
-	introduced for fear of theorecal concern that .NET could bind
-	two different versions of the same Java library (which should be
-	broken at run-time anyways and app developers must avoid).
-
-	I strongly suggested to default back to this `Lowercase` behavior
-	but no one else was serious about it. 
-    -->
-    <AndroidPackageNamingPolicy Condition="'$(AndroidPackageNamingPolicy)' == ''">Lowercase</AndroidPackageNamingPolicy>
+    <_InstantRunEnabled Condition="Exists('$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Common.Debugging.targets')">True</_InstantRunEnabled>
   </PropertyGroup>
-
 </Project>
 
