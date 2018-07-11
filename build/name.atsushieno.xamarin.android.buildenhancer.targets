@@ -16,7 +16,7 @@
       Files="$(_BindingIntermediateJarBaseName).lst" />
     <WriteLinesToFile File="$(_BindingIntermediateJarBaseName).lst" Lines="@(BindingJavaSource)" />
     <Exec Command="javac -g -d $(_IntermediateBJCPath)bin @$(_BindingIntermediateJarBaseName).lst" />
-    <Exec Command="jar cvf $(_BindingIntermediateJarBaseName).jar $(_IntermediateBJCPath)bin" />
+    <Exec Command="jar cvf $(_BindingIntermediateJarBaseName).jar -C $(_IntermediateBJCPath)bin ." />
     <CreateItem Include="$(_BindingIntermediateJarBaseName).jar">
       <Output TaskParameter="Include" ItemName="EmbeddedJar" />
     </CreateItem>
