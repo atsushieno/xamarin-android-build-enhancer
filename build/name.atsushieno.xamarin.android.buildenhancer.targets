@@ -8,7 +8,9 @@
     </PropertyGroup>
   </Target>
   
-  <Target Name="BuildJarFromSources" BeforeTargets="ExportJarToXml" DependsOnTargets="_DefineDynamicProperties">
+  <Target Name="BuildJarFromSources" BeforeTargets="ExportJarToXml" DependsOnTargets="_DefineDynamicProperties"
+  Inputs="@(BindingJavaSource)"
+  Outputs="$(_BindingIntermediateJarBaseName).jar">
     <MakeDir Directories="$(_IntermediateBJCPath)" />
     <MakeDir Directories="$(_IntermediateBJCPath)bin" />
     <Delete

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>name.atsushieno.xamarin.android.buildenhancer</id>
-    <version>1.1.6</version>
+    <version>1.1.7</version>
     <authors>atsushieno</authors>
     <owners>atsushieno</owners>
     <licenseUrl>http://https://github.com/atsushieno/xamarin-android-build-enhancer/LICENSE</licenseUrl>
